@@ -20,7 +20,7 @@ public class Nukkit {
 
     public final static String NAME = "Pure";
     public final static String VERSION = "1.0.2";
-    public final static String API_VERSION = "1.0.0";
+    public final static String API_VERSION = "1.0.15";
     public final static String CODENAME = "PureTeam";
     @Deprecated
     public final static String MINECRAFT_VERSION = ProtocolInfo.MINECRAFT_VERSION;
@@ -31,8 +31,8 @@ public class Nukkit {
     public final static String DATA_PATH = System.getProperty("user.dir") + "/";
     public final static String PLUGIN_PATH = DATA_PATH + "plugins";
     public static final long START_TIME = System.currentTimeMillis();
-    public static boolean ANSI = false;
-    public static boolean TITLE = true;
+    public static boolean ANSI = true;
+    public static boolean TITLE = false;
     public static boolean shortTitle = reqShortTitle();
     public static int DEBUG = 1;
 
@@ -42,11 +42,13 @@ public class Nukkit {
         System.setProperty("log4j.skipJansi", "false");
         System.getProperties().putIfAbsent("io.netty.allocator.type", "unpooled"); // Disable memory pooling unless specified
 
+        System.setProperty("leveldb.mmap", "true");
         InternalLoggerFactory.setDefaultFactory(Log4J2LoggerFactory.INSTANCE);
 
         // Define args
         OptionParser parser = new OptionParser();
-        OptionSpecBuilder disableAnsi = parser.accepts("enable-ansi", "Disables interactive console I/O");
+        OptionSpecBuilder helpSpec = parser.accepts("help", "Shows this page");
+        OptionSpecBuilder disableAnsi = parser.accepts("enable-ansi", "Disables console coloring");
         OptionSpecBuilder enableTitle = parser.accepts("enable-title", "Enables title at the top of the window");
         parser.accepts("v", "Set verbosity of logging").withRequiredArg().ofType(String.class);
         parser.accepts("verbosity", "Set verbosity of logging").withRequiredArg().ofType(String.class);

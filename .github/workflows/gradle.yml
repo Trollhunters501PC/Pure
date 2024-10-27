@@ -4,6 +4,7 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, '[ci skip]')}}
 
     steps:
     - uses: actions/checkout@v4
@@ -20,4 +21,4 @@ jobs:
       run: chmod 777 gradlew
 
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew build --no-daemon --no-configuration-cache

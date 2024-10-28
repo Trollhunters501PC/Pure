@@ -22,3 +22,9 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build --no-daemon --no-configuration-cache
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Nukkit PureEdition
+        path: build/libs/Pure.jar
